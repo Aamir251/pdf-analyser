@@ -1,6 +1,9 @@
 import Link from "next/link"
-import Container from "./Container"
-import { buttonVariants } from "../ui/button"
+import Container from "../Container"
+import { buttonVariants } from "../../ui/button";
+import SignedInLinks from "./SignedInLinks";
+
+
 
 const Navbar = () => {
   return (
@@ -14,7 +17,9 @@ const Navbar = () => {
                 {/* TODO: add mobile navbar */}
 
                 <div className="hidden items-center space-x-4 sm:flex">
+                    
                     <>
+                    <SignedInLinks />
                         <Link href="/pricing" className={buttonVariants({
                             variant : "ghost",
                             size : "sm"

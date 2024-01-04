@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { FormEvent, useEffect, useRef, useState } from "react";
-
+import { useRouter } from "next/navigation";
+import { loginThroughCredentials } from "@/lib/utils";
 interface FormData {
 	email: string;
 	password: string;
@@ -11,6 +12,8 @@ interface FormData {
 
 
 const Form = () => {
+
+	const router = useRouter()
   const [ error, setError ] = useState<string | null>(null)
 	const [ isLoading, setIsLoading ] = useState<boolean>(false)
 	const [ successMessage, setSuccessMessage ] = useState<string | null>(null)
@@ -30,19 +33,13 @@ const Form = () => {
 				password: passwordRef.current?.value || '',
 			};
 
-      const response = await signIn('credentials', {
-        email : formData.email,
-        password : formData.password,
-        redirect : false
-      })
+			
+			await loginThroughCredentials({
+				email : formData.email,
+				password : formData.password,
+				router
+			})
 
-      console.log({response});
-      
-
-      if(!response?.ok) {
-        throw new Error(response?.error as string)
-      }
-      
 
     } catch (error : any) {
       

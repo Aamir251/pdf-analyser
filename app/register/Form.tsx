@@ -1,7 +1,10 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
+import { loginThroughCredentials } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
 
 interface FormData {
@@ -12,6 +15,7 @@ interface FormData {
 
 
 export default function Form() {
+	const router = useRouter()
 	const [ error, setError ] = useState<string | null>(null)
 	const [ successMessage, setSuccessMessage ] = useState<string | null>(null)
 	const [ isLoading, setIsLoading ] = useState<boolean>(false)
@@ -43,6 +47,15 @@ export default function Form() {
 			if(!response.ok) throw Error(data?.message)
 				
 			setSuccessMessage("Account Created Successfully!")
+
+			
+			await loginThroughCredentials({
+				email : formData.email,
+				password : formData.password,
+				router
+			})
+
+
 		} catch (error : any) {
 			setError(error.message)
 		} finally {
