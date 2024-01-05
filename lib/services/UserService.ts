@@ -1,23 +1,11 @@
-import { SessionUser } from '@/types/SessionUser';
-import { Db, Collection, ObjectId } from 'mongodb';
-
-interface SaveUser {
-  name : string
-  email : string
-  password : string
-}
-
-interface IDatabaseUser {
-  _id : ObjectId,
-  name : string
-  email : string
-  password : string
-}
+import { DBUser, User, SessionUser } from '@/types/User';
+import { Db, Collection } from 'mongodb';
 
 
-const getUserCollection = (db : Db) : Collection<SaveUser> => db.collection<SaveUser>('users')
 
-export const createUser = async (db : Db, user : SaveUser) => {
+const getUserCollection = (db : Db) : Collection<User> => db.collection<User>('users')
+
+export const createUser = async (db : Db, user : User) => {
 
   const userCollections = getUserCollection(db)
 
@@ -65,7 +53,7 @@ export const userExistsInDB = async (db : Db, email : string ) : Promise<boolean
   return false
 }
 
-const getUserWithPassword = async (db : Db, email : string) : Promise<IDatabaseUser | null> => {
+const getUserWithPassword = async (db : Db, email : string) : Promise<DBUser | null> => {
   const userCollections = getUserCollection(db)
 
   const user =  await userCollections.findOne({ email })

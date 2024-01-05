@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { loginThroughCredentials } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
 

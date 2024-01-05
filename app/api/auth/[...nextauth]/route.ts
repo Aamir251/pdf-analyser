@@ -1,7 +1,5 @@
 import { connectToDB } from "@/lib/db/connectToDB";
 import { authenticateUser, getUser } from "@/lib/services/UserService";
-import { DBUser } from "@/types/DBUser";
-import { SessionUser } from "@/types/SessionUser";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -19,9 +17,7 @@ const authOptions : AuthOptions = {
       },
 
       async authorize(credentials) {
-        
 
-        
         const db = await connectToDB()
 
         const user = await authenticateUser(db, credentials?.email!, credentials?.password!)
@@ -32,15 +28,6 @@ const authOptions : AuthOptions = {
 
         return null
         
-        /**
-         * Verify If user is Valid
-        */
-        // const user : SessionUser | null = await getUser(db, credentials?.email!)
-
-        // if(user) {
-        //     return user
-        // }
-
       },
     })
   ],

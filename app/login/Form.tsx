@@ -1,10 +1,10 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { signIn } from "next-auth/react";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { loginThroughCredentials } from "@/lib/utils";
+
 interface FormData {
 	email: string;
 	password: string;
@@ -39,6 +39,8 @@ const Form = () => {
 				password : formData.password,
 				router
 			})
+
+			setSuccessMessage('Login Successful')
 
 
     } catch (error : any) {
