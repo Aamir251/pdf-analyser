@@ -5,16 +5,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
-
 
 
 export default function Home() {
-
-  const { data : session } = useSession()
-
-  console.log("session ", session);
-  
 
   return <>
     <Container className="mb-12 mt-28 sm:mt-40 flex-col-center text-center">

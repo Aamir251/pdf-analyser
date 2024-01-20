@@ -5,7 +5,6 @@ import argon2 from 'argon2'
 
 export async function POST(request : Request) {
 
-    const SALT_ROUNDS = 10
     try {
         
         const { name, email, password } = await request.json()
@@ -18,7 +17,7 @@ export async function POST(request : Request) {
 
         const db = await connectToDB()
 
-        const userAlreadyExists : boolean = await userExistsInDB(db, email)
+        const userAlreadyExists : boolean = await userExistsInDB(email)
 
         if(userAlreadyExists) throw Error("User Already Exists")
 
@@ -28,7 +27,7 @@ export async function POST(request : Request) {
         // Hash password
         const hashedPassword = await argon2.hash(password)
 
-        await createUser(db, {
+        await createUser({
             name,
             email,
             password : hashedPassword,

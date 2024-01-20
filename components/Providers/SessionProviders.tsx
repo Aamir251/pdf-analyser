@@ -9,7 +9,7 @@ interface IProps {
     session? : Session
 }
 
-const Provider = ({ children, session } : IProps) => {
+const SessionProviders = ({ children, session } : IProps) => {
     return (
         <SessionProvider session={session} >
           {children}
@@ -17,4 +17,4 @@ const Provider = ({ children, session } : IProps) => {
       )
 }
 
-export default Provider
+export default SessionProviders

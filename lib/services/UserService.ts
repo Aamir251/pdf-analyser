@@ -1,11 +1,14 @@
 import { DBUser, User, SessionUser } from '@/types/User';
 import { Db, Collection } from 'mongodb';
+import { connectToDB } from '../db/connectToDB';
 
 
 
 const getUserCollection = (db : Db) : Collection<User> => db.collection<User>('users')
 
-export const createUser = async (db : Db, user : User) => {
+export const createUser = async (user : User) => {
+
+  const db : Db = await connectToDB()
 
   const userCollections = getUserCollection(db)
 
@@ -24,8 +27,10 @@ export const createUser = async (db : Db, user : User) => {
 
 }
 
-export const getUser = async (db : Db, email : string) : Promise<SessionUser> =>
+export const getUser = async (email : string) : Promise<SessionUser> =>
 {
+  const db : Db = await connectToDB()
+
   const userCollections = getUserCollection(db)
 
   const user =  await userCollections.findOne({ email })
@@ -42,8 +47,10 @@ export const getUser = async (db : Db, email : string) : Promise<SessionUser> =>
 }
 
 
-export const userExistsInDB = async (db : Db, email : string ) : Promise<boolean> => 
+export const userExistsInDB = async (email : string ) : Promise<boolean> => 
 {
+  const db : Db = await connectToDB()
+
   const userCollections = getUserCollection(db)
 
   const user =  await userCollections.findOne({ email })
@@ -53,7 +60,9 @@ export const userExistsInDB = async (db : Db, email : string ) : Promise<boolean
   return false
 }
 
-const getUserWithPassword = async (db : Db, email : string) : Promise<DBUser | null> => {
+const getUserWithPassword = async (email : string) : Promise<DBUser | null> => {
+  const db : Db = await connectToDB()
+
   const userCollections = getUserCollection(db)
 
   const user =  await userCollections.findOne({ email })
@@ -71,10 +80,10 @@ const verifyPassword = async ( password : string, hashedPassword : string ) : Pr
   return (await import('argon2')).verify(hashedPassword, password)
 }
 
-export const authenticateUser = async (db : Db, email : string, password : string) : Promise<SessionUser | null> => 
+export const authenticateUser = async (email : string, password : string) : Promise<SessionUser | null> => 
 {
 
-  const user = await getUserWithPassword(db, email);
+  const user = await getUserWithPassword(email);
 
   if (!user) {
     // User not found
@@ -82,8 +91,6 @@ export const authenticateUser = async (db : Db, email : string, password : strin
   }
 
   const isPasswordValid = await verifyPassword(password, user.password)
-
-  console.log({ isPasswordValid });
 
   
   if(isPasswordValid) {

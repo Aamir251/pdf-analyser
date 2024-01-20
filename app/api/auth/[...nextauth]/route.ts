@@ -1,4 +1,3 @@
-import { connectToDB } from "@/lib/db/connectToDB";
 import { authenticateUser, getUser } from "@/lib/services/UserService";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -18,9 +17,7 @@ const authOptions : AuthOptions = {
 
       async authorize(credentials) {
 
-        const db = await connectToDB()
-
-        const user = await authenticateUser(db, credentials?.email!, credentials?.password!)
+        const user = await authenticateUser(credentials?.email!, credentials?.password!)
         
         if(user){
           return user
@@ -39,11 +36,18 @@ const authOptions : AuthOptions = {
   },
 
   callbacks : {
+
+
+    // async signIn(params) {
+        /**
+         * If using OAuth providers, on successful signIn, 
+         * we can save user to DB in the callback signIn function
+        */
+    // },
     async session({ session }) {
 
       if(session?.user?.email) {
-        const db = await connectToDB()
-        const user = await getUser(db, session?.user?.email)
+        const user = await getUser(session?.user?.email)
         session.user.id = user?._id
         session.user.name = user?.name!
       }

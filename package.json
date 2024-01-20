@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
+    "@tanstack/react-query": "^5.17.12",
+    "@trpc/client": "^11.0.0-next-beta.193",
+    "@trpc/next": "^11.0.0-next-beta.193",
+    "@trpc/react-query": "^11.0.0-next-beta.193",
+    "@trpc/server": "^11.0.0-next-beta.193",
     "argon2": "^0.31.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -19,8 +24,11 @@
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
-    "tailwind-merge": "^2.2.0"
+    "tailwind-merge": "^2.2.0",
+    "zod": "^3.22.4"
   },
+
+  
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20",

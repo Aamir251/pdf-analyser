@@ -15,7 +15,7 @@ declare module "next-auth" {
         }
     }
 
-    export interface User {
+    interface User {
         id? : ObjectId,
         _id : ObjectId,
         email : string,

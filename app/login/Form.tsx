@@ -1,4 +1,5 @@
 'use client'
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { FormEvent, useEffect, useRef, useState } from "react";
@@ -9,7 +10,6 @@ interface FormData {
 	email: string;
 	password: string;
 }
-
 
 const Form = () => {
 
